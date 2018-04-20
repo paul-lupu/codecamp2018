@@ -1,0 +1,37 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: apache-docker-service
+spec:
+  selector:
+    app: apache-docker-app
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 80
+      # Port to forward to inside the pod
+      targetPort: 80
+      # Port accessible outside cluster
+      nodePort: 30080
+  type: LoadBalancer
+
+
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: apache-docker--deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: apache-docker-app
+    spec:
+      containers:
+        - name: apache
+          image: fritzroy15/apache-docker:latest
+          ports:
+            - containerPort: 8080

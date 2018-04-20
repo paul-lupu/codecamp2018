@@ -1,0 +1,12 @@
+docker build . 
+docker login
+docker build -t fritzroy15/apache-docker:latest .
+docker run -d --link mysql1 -p 8080:80 fritzroy15/apache-docker
+docker run -ti -p 8080:80 fritzroy15/apache-docker /bin/bash
+kubectl get pods
+kubectl get deployments
+minikube dashboard
+kubectl create -f deployment.yaml
+minikube ip
+kubectl delete -f deployment.yaml
+
